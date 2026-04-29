@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATELIER</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&amp;family=Questrial&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { height: 100%; margin: 0; }
+    .font-display { font-family: 'Cormorant Garamond', serif; }
+    .font-body { font-family: 'Questrial', sans-serif; }
+    .product-card:hover .product-overlay { opacity: 1; }
+    .product-card:hover img { transform: scale(1.03); }
+    .marquee { animation: marquee 20s linear infinite; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.8s ease forwards; }
+    .fade-up-d1 { animation-delay: 0.15s; opacity: 0; }
+    .fade-up-d2 { animation-delay: 0.3s; opacity: 0; }
+    .fade-up-d3 { animation-delay: 0.45s; opacity: 0; }
+    .fade-up-d4 { animation-delay: 0.6s; opacity: 0; }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; transition: width 0.3s; }
+    .nav-link:hover::after { width: 100%; }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="w-full h-full overflow-auto" style="background-color: #F5F0EB;"><!-- Nav -->
+   <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="navbar" style="background-color: rgba(245,240,235,0.95); backdrop-filter: blur(8px);">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+     <div class="flex items-center gap-8"><button id="menu-btn" class="lg:hidden"><i data-lucide="menu" style="width:22px;height:22px;"></i></button>
+      <div class="hidden lg:flex items-center gap-6"><a href="#collections" class="nav-link font-body text-sm tracking-widest uppercase" style="color:#1A1A1A;">Collections</a> <a href="#about" class="nav-link font-body text-sm tracking-widest uppercase" style="color:#1A1A1A;">About</a> <a href="#journal" class="nav-link font-body text-sm tracking-widest uppercase" style="color:#1A1A1A;">Journal</a>
+      </div>
+     </div><a href="#" id="nav-brand" class="font-display text-2xl md:text-3xl tracking-[0.25em] font-light absolute left-1/2 -translate-x-1/2" style="color:#1A1A1A;">ATELIER</a>
+     <div class="flex items-center gap-5"><button><i data-lucide="search" style="width:20px;height:20px;color:#1A1A1A;"></i></button> <button class="relative"><i data-lucide="shopping-bag" style="width:20px;height:20px;color:#1A1A1A;"></i><span class="absolute -top-1 -right-1 w-4 h-4 rounded-full text-[10px] flex items-center justify-center font-body" style="background-color:#8B6E4E;color:#F5F0EB;">2</span></button>
+     </div>
+    </div>
+   </nav><!-- Mobile Menu -->
+   <div id="mobile-menu" class="fixed inset-0 z-[60] hidden" style="background-color:#F5F0EB;">
+    <div class="p-6 flex justify-between items-center"><span class="font-display text-2xl tracking-[0.25em] font-light" style="color:#1A1A1A;">ATELIER</span> <button id="close-menu"><i data-lucide="x" style="width:24px;height:24px;color:#1A1A1A;"></i></button>
+    </div>
+    <div class="flex flex-col items-center gap-8 mt-16"><a href="#collections" class="font-display text-3xl tracking-wider" style="color:#1A1A1A;" onclick="closeMobileMenu()">Collections</a> <a href="#about" class="font-display text-3xl tracking-wider" style="color:#1A1A1A;" onclick="closeMobileMenu()">About</a> <a href="#journal" class="font-display text-3xl tracking-wider" style="color:#1A1A1A;" onclick="closeMobileMenu()">Journal</a>
+    </div>
+   </div><!-- Hero -->
+   <header class="w-full pt-20 relative overflow-hidden" style="min-height: 90%;">
+    <div class="max-w-7xl mx-auto px-6 h-full flex flex-col lg:flex-row items-center justify-center gap-12 py-16">
+     <div class="flex-1 flex flex-col justify-center z-10">
+      <p id="hero-sub" class="font-body text-xs tracking-[0.4em] uppercase mb-4 fade-up" style="color:#8B6E4E;">Autumn/Winter 2025</p>
+      <h1 id="hero-headline" class="font-display text-5xl md:text-7xl lg:text-8xl font-light leading-[0.95] mb-6 fade-up fade-up-d1" style="color:#1A1A1A;">Quiet<br>
+       Elegance</h1>
+      <p id="hero-subtext" class="font-body text-sm md:text-base max-w-md leading-relaxed mb-8 fade-up fade-up-d2" style="color:#5A5A5A;">Timeless silhouettes crafted from the finest natural fabrics. Designed for those who wear confidence effortlessly.</p><a href="#collections" id="hero-cta" class="inline-flex items-center gap-3 font-body text-sm tracking-[0.2em] uppercase py-3 px-8 border transition-all duration-300 w-fit fade-up fade-up-d3 hover:gap-5" style="color:#1A1A1A;border-color:#1A1A1A;"> <span>Shop Now</span><i data-lucide="arrow-right" style="width:16px;height:16px;"></i> </a>
+     </div>
+     <div class="flex-1 relative fade-up fade-up-d2">
+      <div class="relative w-full aspect-[3/4] max-w-lg mx-auto rounded-sm overflow-hidden">
+       <svg viewbox="0 0 600 800" class="w-full h-full" xmlns="http://www.w3.org/2000/svg"><defs>
+         <lineargradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#D4C4B0" />
+          <stop offset="100%" stop-color="#A89279" />
+         </lineargradient>
+        </defs> <rect fill="url(#bg1)" width="600" height="800" /> <ellipse cx="300" cy="200" rx="60" ry="70" fill="#C4B49A" /> <rect x="240" y="270" width="120" height="200" rx="10" fill="#B8A68E" /> <rect x="220" y="470" width="70" height="250" rx="8" fill="#A89279" /> <rect x="310" y="470" width="70" height="250" rx="8" fill="#A89279" /> <rect x="180" y="290" width="60" height="160" rx="6" fill="#C4B49A" transform="rotate(-10 210 370)" /> <rect x="360" y="290" width="60" height="160" rx="6" fill="#C4B49A" transform="rotate(10 390 370)" /> <rect x="230" y="270" width="140" height="120" rx="4" fill="#E8DDD0" opacity="0.6" /> <line x1="300" y1="280" x2="300" y2="380" stroke="#B8A68E" stroke-width="1.5" /> <circle cx="300" cy="290" r="4" fill="#8B6E4E" />
+       </svg>
+      </div>
+      <div class="absolute -bottom-4 -left-4 w-32 h-32 rounded-full border opacity-30" style="border-color:#8B6E4E;"></div>
+     </div>
+    </div>
+   </header><!-- Marquee -->
+   <div class="w-full py-4 overflow-hidden border-y" style="border-color:#D4C4B0;">
+    <div class="marquee whitespace-nowrap"><span class="font-display text-lg tracking-[0.3em] mx-12" style="color:#8B6E4E;">FREE SHIPPING OVER $150 &nbsp;✦&nbsp; SUSTAINABLE MATERIALS &nbsp;✦&nbsp; HANDCRAFTED DETAILS &nbsp;✦&nbsp; NEW ARRIVALS WEEKLY &nbsp;✦&nbsp; FREE SHIPPING OVER $150 &nbsp;✦&nbsp; SUSTAINABLE MATERIALS &nbsp;✦&nbsp; HANDCRAFTED DETAILS &nbsp;✦&nbsp; NEW ARRIVALS WEEKLY &nbsp;✦&nbsp;</span>
+    </div>
+   </div><!-- Collections -->
+   <section id="collections" class="w-full py-20 px-6">
+    <div class="max-w-7xl mx-auto">
+     <div class="text-center mb-14">
+      <p class="font-body text-xs tracking-[0.4em] uppercase mb-3" style="color:#8B6E4E;">Curated</p>
+      <h2 id="collection-title" class="font-display text-4xl md:text-5xl font-light" style="color:#1A1A1A;">The Edit</h2>
+     </div>
+     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6" id="product-grid">
+     </div>
+    </div>
+   </section><!-- About -->
+   <section id="about" class="w-full py-20 px-6">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+     <div class="flex-1">
+      <svg viewbox="0 0 500 600" class="w-full rounded-sm" xmlns="http://www.w3.org/2000/svg"><rect fill="#D4C4B0" width="500" height="600" /> <rect x="50" y="80" width="400" height="440" rx="4" fill="#C4B49A" opacity="0.5" /> <circle cx="250" cy="250" r="100" fill="#B8A68E" opacity="0.6" /> <rect x="180" y="350" width="140" height="3" fill="#8B6E4E" opacity="0.4" /> <rect x="200" y="370" width="100" height="3" fill="#8B6E4E" opacity="0.3" />
+      </svg>
+     </div>
+     <div class="flex-1">
+      <p class="font-body text-xs tracking-[0.4em] uppercase mb-3" style="color:#8B6E4E;">Our Story</p>
+      <h2 class="font-display text-4xl md:text-5xl font-light mb-6" style="color:#1A1A1A;">Made with<br>
+       Intention</h2>
+      <p class="font-body text-sm leading-relaxed mb-4" style="color:#5A5A5A;">Every piece begins with a single thread of thought — the belief that clothing should feel as good as it looks. We source organic linens, recycled wools, and plant-dyed silks from artisan mills across Portugal and Japan.</p>
+      <p class="font-body text-sm leading-relaxed mb-8" style="color:#5A5A5A;">Our small-batch approach means less waste and more care in every stitch. This isn't fast fashion. This is fashion that lasts.</p><a href="#" class="font-body text-sm tracking-[0.2em] uppercase border-b pb-1 inline-flex items-center gap-2 transition-all hover:gap-4" style="color:#1A1A1A;border-color:#1A1A1A;">Learn More <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></a>
+     </div>
+    </div>
+   </section><!-- Journal -->
+   <section id="journal" class="w-full py-20 px-6" style="background-color:#E8DDD0;">
+    <div class="max-w-7xl mx-auto">
+     <div class="text-center mb-14">
+      <p class="font-body text-xs tracking-[0.4em] uppercase mb-3" style="color:#8B6E4E;">Stories</p>
+      <h2 class="font-display text-4xl md:text-5xl font-light" style="color:#1A1A1A;">Journal</h2>
+     </div>
+     <div class="grid md:grid-cols-3 gap-8" id="journal-grid"></div>
+    </div>
+   </section><!-- Newsletter -->
+   <section class="w-full py-20 px-6 text-center">
+    <div class="max-w-lg mx-auto">
+     <h2 class="font-display text-3xl md:text-4xl font-light mb-4" style="color:#1A1A1A;">Stay in the Loop</h2>
+     <p class="font-body text-sm mb-8" style="color:#5A5A5A;">First access to new drops, exclusive offers, and stories from the atelier.</p>
+     <form id="newsletter-form" class="flex gap-3 max-w-md mx-auto"><input type="email" placeholder="your@email.com" required class="flex-1 px-4 py-3 font-body text-sm border rounded-none outline-none focus:border-current transition-colors" style="background:transparent;border-color:#8B6E4E;color:#1A1A1A;"> <button type="submit" class="px-6 py-3 font-body text-xs tracking-[0.2em] uppercase transition-opacity hover:opacity-80" style="background-color:#1A1A1A;color:#F5F0EB;">Join</button>
+     </form>
+     <p id="newsletter-msg" class="font-body text-sm mt-4 hidden" style="color:#8B6E4E;"></p>
+    </div>
+   </section><!-- Footer -->
+   <footer class="w-full py-12 px-6 border-t" style="border-color:#D4C4B0;">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
+     <div>
+      <p id="footer-brand" class="font-display text-xl tracking-[0.25em] font-light mb-3" style="color:#1A1A1A;">ATELIER</p>
+      <p class="font-body text-xs" style="color:#5A5A5A;">© 2025 All rights reserved.</p>
+     </div>
+     <div class="flex gap-10">
+      <div>
+       <p class="font-body text-xs tracking-[0.2em] uppercase mb-3" style="color:#8B6E4E;">Shop</p>
+       <div class="flex flex-col gap-2"><a href="#" class="font-body text-sm hover:opacity-70 transition-opacity" style="color:#1A1A1A;">New In</a> <a href="#" class="font-body text-sm hover:opacity-70 transition-opacity" style="color:#1A1A1A;">Bestsellers</a> <a href="#" class="font-body text-sm hover:opacity-70 transition-opacity" style="color:#1A1A1A;">Sale</a>
+       </div>
+      </div>
+      <div>
+       <p class="font-body text-xs tracking-[0.2em] uppercase mb-3" style="color:#8B6E4E;">Info</p>
+       <div class="flex flex-col gap-2"><a href="#" class="font-body text-sm hover:opacity-70 transition-opacity" style="color:#1A1A1A;">Shipping</a> <a href="#" class="font-body text-sm hover:opacity-70 transition-opacity" style="color:#1A1A1A;">Returns</a> <a href="#" class="font-body text-sm hover:opacity-70 transition-opacity" style="color:#1A1A1A;">Contact</a>
+       </div>
+      </div>
+     </div>
+     <div class="flex gap-4 items-start"><a href="#" class="hover:opacity-70 transition-opacity"><i data-lucide="instagram" style="width:20px;height:20px;color:#1A1A1A;"></i></a> <a href="#" class="hover:opacity-70 transition-opacity"><i data-lucide="twitter" style="width:20px;height:20px;color:#1A1A1A;"></i></a>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+  const products = [
+    { name: 'Linen Oversized Blazer', price: '$285', color: '#C4B49A' },
+    { name: 'Wool Pleated Trousers', price: '$195', color: '#A89279' },
+    { name: 'Silk Draped Blouse', price: '$220', color: '#D4C4B0' },
+    { name: 'Cashmere Knit Vest', price: '$310', color: '#B8A68E' }
+  ];
+
+  const journals = [
+    { title: 'The Art of Layering', date: 'Oct 12, 2025', color: '#C4B49A' },
+    { title: 'Behind the Weave', date: 'Sep 28, 2025', color: '#B8A68E' },
+    { title: 'A Season in Kyoto', date: 'Sep 15, 2025', color: '#D4C4B0' }
+  ];
+
+  function renderProducts() {
+    document.getElementById('product-grid').innerHTML = products.map(p => `
+      <div class="product-card group cursor-pointer">
+        <div class="relative overflow-hidden rounded-sm mb-3 aspect-[3/4]">
+          <svg viewBox="0 0 300 400" class="w-full h-full transition-transform duration-500" xmlns="http://www.w3.org/2000/svg">
+            <rect fill="${p.color}" width="300" height="400"/>
+            <rect x="100" y="60" width="100" height="140" rx="6" fill="rgba(255,255,255,0.15)"/>
+            <rect x="110" y="200" width="35" height="120" rx="4" fill="rgba(255,255,255,0.1)"/>
+            <rect x="155" y="200" width="35" height="120" rx="4" fill="rgba(255,255,255,0.1)"/>
+            <circle cx="150" cy="45" r="25" fill="rgba(255,255,255,0.12)"/>
+          </svg>
+          <div class="product-overlay absolute inset-0 flex items-end justify-center pb-4 opacity-0 transition-opacity duration-300" style="background:linear-gradient(transparent 60%, rgba(26,26,26,0.4));">
+            <span class="font-body text-xs tracking-[0.2em] uppercase" style="color:#F5F0EB;">Quick View</span>
+          </div>
+        </div>
+        <p class="font-body text-sm mb-1" style="color:#1A1A1A;">${p.name}</p>
+        <p class="font-body text-sm" style="color:#8B6E4E;">${p.price}</p>
+      </div>
+    `).join('');
+  }
+
+  function renderJournals() {
+    document.getElementById('journal-grid').innerHTML = journals.map(j => `
+      <a href="#" class="group block">
+        <div class="overflow-hidden rounded-sm mb-4 aspect-[4/3]">
+          <svg viewBox="0 0 400 300" class="w-full h-full transition-transform duration-500 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg">
+            <rect fill="${j.color}" width="400" height="300"/>
+            <rect x="40" y="120" width="320" height="3" fill="rgba(255,255,255,0.2)"/>
+            <rect x="80" y="145" width="240" height="3" fill="rgba(255,255,255,0.15)"/>
+          </svg>
+        </div>
+        <p class="font-body text-xs tracking-[0.2em] uppercase mb-2" style="color:#8B6E4E;">${j.date}</p>
+        <p class="font-display text-xl font-light group-hover:opacity-70 transition-opacity" style="color:#1A1A1A;">${j.title}</p>
+      </a>
+    `).join('');
+  }
+
+  renderProducts();
+  renderJournals();
+
+  // Mobile menu
+  document.getElementById('menu-btn').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.remove('hidden');
+  });
+  document.getElementById('close-menu').addEventListener('click', closeMobileMenu);
+  function closeMobileMenu() {
+    document.getElementById('mobile-menu').classList.add('hidden');
+  }
+
+  // Newsletter
+  document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('newsletter-msg');
+    msg.textContent = 'Welcome to the family ✦';
+    msg.classList.remove('hidden');
+    e.target.reset();
+  });
+
+  // Nav scroll
+  let lastScroll = 0;
+  document.getElementById('app').addEventListener('scroll', function() {
+    const nav = document.getElementById('navbar');
+    const st = this.scrollTop;
+    if (st > 80) {
+      nav.style.boxShadow = '0 1px 20px rgba(0,0,0,0.06)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+    lastScroll = st;
+  });
+
+  // Element SDK
+  const defaultConfig = {
+    brand_name: 'ATELIER',
+    hero_headline: 'Quiet\nElegance',
+    hero_subtext: 'Timeless silhouettes crafted from the finest natural fabrics. Designed for those who wear confidence effortlessly.',
+    collection_title: 'The Edit',
+    cta_text: 'Shop Now',
+    background_color: '#F5F0EB',
+    surface_color: '#E8DDD0',
+    text_color: '#1A1A1A',
+    accent_color: '#8B6E4E',
+    secondary_action_color: '#5A5A5A',
+    font_family: 'Cormorant Garamond',
+    font_size: 16
+  };
+
+  async function onConfigChange(config) {
+    const brand = config.brand_name || defaultConfig.brand_name;
+    const headline = config.hero_headline || defaultConfig.hero_headline;
+    const subtext = config.hero_subtext || defaultConfig.hero_subtext;
+    const colTitle = config.collection_title || defaultConfig.collection_title;
+    const cta = config.cta_text || defaultConfig.cta_text;
+    const bg = config.background_color || defaultConfig.background_color;
+    const surface = config.surface_color || defaultConfig.surface_color;
+    const text = config.text_color || defaultConfig.text_color;
+    const accent = config.accent_color || defaultConfig.accent_color;
+    const secondary = config.secondary_action_color || defaultConfig.secondary_action_color;
+    const font = config.font_family || defaultConfig.font_family;
+    const size = config.font_size || defaultConfig.font_size;
+
+    document.getElementById('nav-brand').textContent = brand;
+    document.getElementById('footer-brand').textContent = brand;
+    document.getElementById('hero-headline').innerHTML = headline.replace(/\n/g, '<br>');
+    document.getElementById('hero-subtext').textContent = subtext;
+    document.getElementById('collection-title').textContent = colTitle;
+    document.getElementById('hero-cta').querySelector('span').textContent = cta;
+
+    document.getElementById('app').style.backgroundColor = bg;
+    document.getElementById('navbar').style.backgroundColor = bg + 'f2';
+    document.querySelector('#journal').style.backgroundColor = surface;
+
+    document.querySelectorAll('.font-display').forEach(el => {
+      el.style.fontFamily = `${font}, serif`;
+      el.style.color = text;
+    });
+
+    document.querySelectorAll('.font-body').forEach(el => {
+      el.style.fontSize = `${size}px`;
+    });
+
+    document.querySelectorAll('.nav-link, .nav-link::after').forEach(el => el.style.color = text);
+    document.getElementById('hero-sub').style.color = accent;
+    document.getElementById('hero-subtext').style.color = secondary;
+
+    // Scale text
+    document.getElementById('hero-headline').style.fontSize = `${size * 4.5}px`;
+    document.getElementById('collection-title').style.fontSize = `${size * 3}px`;
+  }
+
+  function makeColor(key) {
+    return {
+      get: () => window.elementSdk.config[key] || defaultConfig[key],
+      set: (v) => { window.elementSdk.config[key] = v; window.elementSdk.setConfig({ [key]: v }); }
+    };
+  }
+
+  window.elementSdk.init({
+    defaultConfig,
+    onConfigChange,
+    mapToCapabilities: (config) => ({
+      recolorables: [
+        makeColor('background_color'),
+        makeColor('surface_color'),
+        makeColor('text_color'),
+        makeColor('accent_color'),
+        makeColor('secondary_action_color')
+      ],
+      borderables: [],
+      fontEditable: {
+        get: () => config.font_family || defaultConfig.font_family,
+        set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+      },
+      fontSizeable: {
+        get: () => config.font_size || defaultConfig.font_size,
+        set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+      }
+    }),
+    mapToEditPanelValues: (config) => new Map([
+      ['brand_name', config.brand_name || defaultConfig.brand_name],
+      ['hero_headline', config.hero_headline || defaultConfig.hero_headline],
+      ['hero_subtext', config.hero_subtext || defaultConfig.hero_subtext],
+      ['collection_title', config.collection_title || defaultConfig.collection_title],
+      ['cta_text', config.cta_text || defaultConfig.cta_text]
+    ])
+  });
+
+  lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f2d23bcc19ed04d',t:'MTc3NzI4NTY5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
